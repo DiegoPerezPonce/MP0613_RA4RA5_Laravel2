@@ -1,0 +1,66 @@
+[
+    {
+        "name": "The Purple Rose of Cairo",
+        "year": 1985,
+        "genre": "Drama",
+        "img_url": "https:\/\/es.web.img2.acsta.net\/medias\/nmedia\/18\/79\/45\/34\/20253823.jpg",
+        "country": "United States",
+        "duration": "85"
+    },
+    {
+        "name": "El Club de los Cinco",
+        "year": 1985,
+        "genre": "Comedia",
+        "img_url": "https:\/\/pics.filmaffinity.com\/El_club_de_los_cinco-192309838-large.jpg",
+        "country": "United States",
+        "duration": "100"
+    },
+    {
+        "name": "Forrest Gump",
+        "year": 1994,
+        "genre": "Drama",
+        "img_url": "https:\/\/pics.filmaffinity.com\/Forrest_Gump-212765827-large.jpg",
+        "country": "United States",
+        "duration": "142"
+    },
+    {
+        "name": "Arrival",
+        "year": 2016,
+        "genre": "Ciencia Ficción",
+        "img_url": "https:\/\/pics.filmaffinity.com\/La_llegada-686966912-large.jpg",
+        "country": "United States",
+        "duration": "116"
+    },
+    {
+        "name": "As Bestas",
+        "year": 2022,
+        "genre": "Drama",
+        "img_url": "https:\/\/pics.filmaffinity.com\/As_bestas-275688233-large.jpg",
+        "country": "Spain",
+        "duration": "137"
+    },
+    {
+        "name": "Los Tigres",
+        "year": 2025,
+        "genre": "Drama",
+        "img_url": "https:\/\/pics.filmaffinity.com\/los_tigres-502637494-mmed.jpg",
+        "country": "Spain",
+        "duration": "109"
+    },
+    {
+        "name": "Avatar: Fuego y ceniza",
+        "year": 2025,
+        "genre": "Aventuras",
+        "country": "United States",
+        "duration": "197",
+        "img_url": "https:\/\/pics.filmaffinity.com\/avatar_fire_and_ash-103982566-large.jpg"
+    },
+    {
+        "name": "Life",
+        "year": 2009,
+        "genre": "Documental",
+        "country": "United Kingdom",
+        "duration": "50",
+        "img_url": "https:\/\/pics.filmaffinity.com\/life-437517169-large.jpg"
+    }
+]
