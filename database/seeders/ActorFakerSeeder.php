@@ -2,22 +2,21 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
 
-class ActorsSeeder extends Seeder
+class ActorFakerSeeder extends Seeder
 {
     public function run()
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             DB::table('actors')->insert([
                 'name' => $faker->firstName,
                 'surname' => $faker->lastName,
-                'birthdate' => $faker->date('Y-m-d', '2005-01-01'),
+                'birthdate' => $faker->date('Y-m-d', '2000-01-01'),
                 'country' => $faker->country,
                 'img_url' => $faker->imageUrl(300, 450, 'people', true),
                 'created_at' => now(),
@@ -26,4 +25,3 @@ class ActorsSeeder extends Seeder
         }
     }
 }
-
