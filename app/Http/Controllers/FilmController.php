@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
-
 class FilmController extends Controller
 {
     /**
@@ -14,8 +13,9 @@ class FilmController extends Controller
     public static function readFilms(): array
     {
         $films = Storage::json('/public/films.json');
-        return $films;
+        return $films ?? [];
     }
+
     /**
      * List films older than input year 
      * if year is not infomed 2000 year will be used as criteria
@@ -27,15 +27,16 @@ class FilmController extends Controller
             $year = 2000;
 
         $title = "Listado de Pelis Antiguas (Antes de $year)";
-        $films = FilmController::readFilms();
+        $films = self::readFilms();
 
         foreach ($films as $film) {
-            //foreach ($this->datasource as $film) {
             if ($film['year'] < $year)
                 $old_films[] = $film;
         }
+
         return view('films.list', ["films" => $old_films, "title" => $title]);
     }
+
     /**
      * List films younger than input year
      * if year is not infomed 2000 year will be used as criteria
@@ -47,42 +48,45 @@ class FilmController extends Controller
             $year = 2000;
 
         $title = "Listado de Pelis Nuevas (Después de $year)";
-        $films = FilmController::readFilms();
+        $films = self::readFilms();
 
         foreach ($films as $film) {
             if ($film['year'] >= $year)
                 $new_films[] = $film;
         }
+
         return view('films.list', ["films" => $new_films, "title" => $title]);
     }
+
     /**
      * Lista TODAS las películas o filtra x año o categoría.
      */
-
     public function listFilms($year = null, $genre = null)
     {
         $films_filtered = [];
-
         $title = "Listado de todas las pelis";
-        $films = FilmController::readFilms();
+        $films = self::readFilms();
 
-        //if year and genre are null
         if (is_null($year) && is_null($genre))
             return view('films.list', ["films" => $films, "title" => $title]);
 
-        //list based on year or genre informed
         foreach ($films as $film) {
             if ((!is_null($year) && is_null($genre)) && $film['year'] == $year) {
                 $title = "Listado de todas las pelis filtrado x año";
                 $films_filtered[] = $film;
-            } else if ((is_null($year) && !is_null($genre)) && strtolower($film['genre']) == strtolower($genre)) {
+            } 
+            else if ((is_null($year) && !is_null($genre)) && strtolower($film['genre']) == strtolower($genre)) {
                 $title = "Listado de todas las pelis filtrado x categoria";
                 $films_filtered[] = $film;
-            } else if (!is_null($year) && !is_null($genre) && strtolower($film['genre']) == strtolower($genre) && $film['year'] == $year) {
+            } 
+            else if (!is_null($year) && !is_null($genre) 
+                && strtolower($film['genre']) == strtolower($genre) 
+                && $film['year'] == $year) {
                 $title = "Listado de todas las pelis filtrado x categoria y año";
                 $films_filtered[] = $film;
             }
         }
+
         return view("films.list", ["films" => $films_filtered, "title" => $title]);
     }
 
@@ -90,12 +94,11 @@ class FilmController extends Controller
     {
         $films_filtered = [];
         $title = "Listado de pelis filtradas por año ($year)";
-        $films = FilmController::readFilms();
+        $films = self::readFilms();
 
         foreach ($films as $film) {
-            if ($film['year'] == $year) {
+            if ($film['year'] == $year)
                 $films_filtered[] = $film;
-            }
         }
 
         return view("films.list", [
@@ -108,12 +111,11 @@ class FilmController extends Controller
     {
         $films_filtered = [];
         $title = "Listado de pelis filtradas por categoría ($genre)";
-        $films = FilmController::readFilms();
+        $films = self::readFilms();
 
         foreach ($films as $film) {
-            if (strtolower($film['genre']) == strtolower($genre)) {
+            if (strtolower($film['genre']) == strtolower($genre))
                 $films_filtered[] = $film;
-            }
         }
 
         return view("films.list", [
@@ -124,7 +126,7 @@ class FilmController extends Controller
 
     public function countFilms()
     {
-        $films = FilmController::readFilms();
+        $films = self::readFilms();
         $count = count($films);
         $title = "Total de Películas";
 
@@ -136,10 +138,9 @@ class FilmController extends Controller
 
     public function sortFilms()
     {
-        $films = FilmController::readFilms();
+        $films = self::readFilms();
         $title = "Listado de Películas Ordenadas por Año (Descendente)";
 
-        // Orden descendente => las más nuevas primero
         usort($films, function ($a, $b) {
             return $b['year'] <=> $a['year'];
         });
@@ -149,33 +150,34 @@ class FilmController extends Controller
             "title" => $title
         ]);
     }
-    //
+
     public function isFilm(string $name): bool
     {
         $films = self::readFilms();
 
         foreach ($films as $film) {
-            if (strtolower($film['name']) === strtolower($name)) {
+            if (strtolower($film['name']) === strtolower($name))
                 return true;
-            }
         }
 
         return false;
     }
 
-    //
     public function createFilm(Request $request)
     {
+        // VALIDACIÓN SOLO DEL AÑO (1900-2024)
+        $request->validate([
+            'year' => 'required|integer|min:1900|max:2024',
+        ]);
+
         // Comprobar si la película ya existe
         if ($this->isFilm($request->name)) {
             return redirect('/')
                 ->with('error', 'La película ya existe.');
         }
 
-        // Leer películas actuales
         $films = self::readFilms();
 
-        // Añadir nueva película
         $films[] = [
             'name'     => $request->name,
             'year'     => (int) $request->year,
@@ -185,13 +187,11 @@ class FilmController extends Controller
             'img_url'  => $request->img_url,
         ];
 
-        // Guardar en JSON
         Storage::put(
             '/public/films.json',
             json_encode($films, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
         );
 
-        // Mostrar listado completo
         return view('films.list', [
             'films' => $films,
             'title' => 'Listado de todas las películas'
