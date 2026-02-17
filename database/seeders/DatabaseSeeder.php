@@ -22,7 +22,9 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            
+            ActorFakerSeeder::class,
+            FilmActorSeeder::class,
+            FilmFakerSeeder::class
         ]);
     }
 }
