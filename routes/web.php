@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActorController;
 use App\Http\Controllers\FilmController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,9 +58,16 @@ Route::prefix('filmout')->group(function () {
         ->name('listFilms');
 });
 
+Route::prefix('actorout')->group(function () {
+    
+    // FR1: List actors
+    Route::get('actors', [ActorController::class, 'listActors'])->name('actors');
+});
+
 Route::group(['prefix' => 'filmin'], function () {
     Route::post(
         'film',
         [FilmController::class, 'createFilm']
     )->middleware('validate.url')->name('film');
 });
+
