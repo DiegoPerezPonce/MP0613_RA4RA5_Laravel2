@@ -5,6 +5,7 @@
 @section('content')
 
 <style>
+
     /* HERO BANNER */
     .hero-banner {
         position: relative;
@@ -289,6 +290,7 @@
             padding: 2rem 1.5rem;
         }
     }
+
 </style>
 
 <!-- HERO BANNER -->
@@ -361,6 +363,9 @@
         <div class="category-title">Estadísticas</div>
         <div class="category-description">Total de películas</div>
     </a>
+
+    <a href="{{ route('actors') }}">List Actors</a>
+
 </div>
 
 <!-- FORM SECTION -->
