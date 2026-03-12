@@ -62,6 +62,11 @@ Route::prefix('actorout')->group(function () {
     
     // FR1: List actors
     Route::get('actors', [ActorController::class, 'listActors'])->name('actors');
+    // FR2: List actor by decade
+    Route::middleware('year')->group(function () {
+    Route::get('listActorsByDecade/{year}', [ActorController::class, 'listActorsByDecade'])
+        ->name('listActorsByDecade');
+});
 });
 
 Route::group(['prefix' => 'filmin'], function () {

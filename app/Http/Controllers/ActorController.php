@@ -14,4 +14,16 @@ class ActorController extends Controller
         return view('actors.list', compact('actors'));
         // compact('actors') pasa los datos a la vista
     }
+
+    public function listActorsByDecade($year)
+    {
+        $startYear = $year;
+        $endYear = $year + 9;
+
+        $actors = Actor::whereYear('birthdate', '>=', $startYear)
+            ->whereYear('birthdate', '<=', $endYear)
+            ->get();
+
+        return view('actors.list', compact('actors'));
+    }
 }
