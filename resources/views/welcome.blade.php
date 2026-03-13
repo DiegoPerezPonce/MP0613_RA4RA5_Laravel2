@@ -362,71 +362,66 @@
             <div class="category-description">Total de películas</div>
         </a>
 
-        <a href="{{ route('actors') }}" class="category-card">
-            <div class="category-icon">
-                <i class="fas fa-masks-theater"></i>
-            </div>
-            <div class="category-title">Actores</div>
-            <div class="category-description">Lista de Actores</div>
-        </a>
-
-        <form action="{{ route('listActorsByDecade', 0) }}" method="get" class="category-card">
-            <div class="category-icon">
-                <i class="fas fa-masks-theater"></i>
-            </div>
-
-            <div class="category-title">Actores</div>
-            <div class="category-description">Decada de nacimiento</div>
-
-            <label for="decade"></label>
-            <select name="decade" id="decade"
-                onchange="this.form.action='{{ url('actorout/listActorsByDecade') }}/'+this.value; this.form.submit();">
-
-                <!-- <option>Buscar</option> -->
-                <option value="1980">1980-1989</option>
-                <option value="1990">1990-1999</option>
-                <option value="2000">2000-2009</option>
-                <option value="2010">2010-2019</option>
-                <option value="2020">2020-2029</option>
-            </select>
-        </form>
     </div>
 
     <!-- ACTORS CATEGORIES SECTION -->
     <h2 class="section-title">Explorar Actores</h2>
 
     <div class="category-grid">
-        
+
         <!-- FR1 List actors -->
         <a href="{{ route('actors') }}" class="category-card">
             <div class="category-icon">
-                <i class="fas fa-masks-theater"></i>
+                <i class="fas fa-calendar"></i>
             </div>
             <div class="category-title">Actores</div>
             <div class="category-description">Lista de Actores</div>
         </a>
-        
-        <!-- FR2 Actors by decade -->
-        <form action="{{ route('listActorsByDecade', 0) }}" method="get" class="category-card" class="category-icon">
+
+        <!-- FR2 Actor by decade -->
+        <div class="category-card">
             <div class="category-icon">
-                <i class="fas fa-calendar"></i>
+                <i class="fas fa-masks-theater"></i>
             </div>
-
             <div class="category-title">Por fecha</div>
-            <div class="category-description">Decada de nacimiento</div>
+            <div class="category-description">Década de nacimiento</div>
 
-            <label for="decade">Buscar</label>
-            <select name="decade" id="decade"
-                onchange="this.form.action='{{ url('actorout/listActorsByDecade') }}/'+this.value; this.form.submit();">
+            <form id="formDecade">
+                <div class="mb-3">
+                    <label for="decadeSelector" class="form-label">Selecciona una década:</label>
+                    <select id="decadeSelector" class="form-select">
+                        <option value="1980">1980-1989</option>
+                        <option value="1990">1990-1999</option>
+                        <option value="2000">2000-2009</option>
+                        <option value="2010">2010-2019</option>
+                        <option value="2020">2020-2029</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Buscar Actores</button>
+            </form>
+        </div>
 
-                <!-- <option>Buscar</option> -->
-                <option value="1980">1980-1989</option>
-                <option value="1990">1990-1999</option>
-                <option value="2000">2000-2009</option>
-                <option value="2010">2010-2019</option>
-                <option value="2020">2020-2029</option>
-            </select>
-        </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const formDecade = document.getElementById('formDecade');
+
+                if (formDecade) {
+                    formDecade.addEventListener('submit', function(event) {
+                        // Detenemos el envío automático del navegador
+                        event.preventDefault();
+
+                        // Capturamos el valor seleccionado
+                        const selectedYear = document.getElementById('decadeSelector').value;
+
+                        // Construimos la URL amigable para Laravel
+                        const targetUrl = `/actorout/listActorsByDecade/${selectedYear}`;
+
+                        // Redirigimos manualmente
+                        window.location.href = targetUrl;
+                    });
+                }
+            });
+        </script>
     </div>
 
     <!-- FORM SECTION -->

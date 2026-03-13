@@ -7,6 +7,7 @@ use App\Models\Actor;
 
 class ActorController extends Controller
 {
+    //FR1
     public function listActors()
     {
         $actors = Actor::all(); // Trae todos los actores de la tabla "actors"
@@ -15,15 +16,19 @@ class ActorController extends Controller
         // compact('actors') pasa los datos a la vista
     }
 
+    //FR2
     public function listActorsByDecade($year)
     {
-        $startYear = $year;
-        $endYear = $year + 9;
+        $start = $year . "-01-01";
+        $end = ($year + 9) . "-12-31";
 
-        $actors = Actor::whereYear('birthdate', '>=', $startYear)
-            ->whereYear('birthdate', '<=', $endYear)
-            ->get();
+        // Consulta usando Eloquent
+        $actors = \App\Models\Actor::whereBetween('birthdate', [$start, $end])->get();
 
-        return view('actors.list', compact('actors'));
+        // Retornamos la vista con un título dinámico
+        return view('actors.list', [
+            'actors' => $actors,
+            'title' => "Actores de la década: $year"
+        ]);
     }
 }
