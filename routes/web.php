@@ -59,9 +59,14 @@ Route::prefix('filmout')->group(function () {
 });
 
 Route::prefix('actorout')->group(function () {
-    
+
     // FR1: List actors
     Route::get('actors', [ActorController::class, 'listActors'])->name('actors');
+
+    // Esta ruta espera /actorout/listActorsByDecade/1980
+    Route::get('/listActorsByDecade/{year}', [ActorController::class, 'listActorsByDecade'])
+        ->name('listActorsByDecade')
+        ->middleware('decade'); // Tu middleware personalizado para décadas
 });
 
 Route::group(['prefix' => 'filmin'], function () {
@@ -70,4 +75,3 @@ Route::group(['prefix' => 'filmin'], function () {
         [FilmController::class, 'createFilm']
     )->middleware('validate.url')->name('film');
 });
-
