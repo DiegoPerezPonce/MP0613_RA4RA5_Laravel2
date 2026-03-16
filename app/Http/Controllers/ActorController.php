@@ -31,4 +31,14 @@ class ActorController extends Controller
             'title' => "Actores de la década: $year"
         ]);
     }
+
+    //FR3 Count actors 
+    public function countActors()
+    {
+        // Obtenemos el total directamente de la base de datos
+        $totalActors = \App\Models\Actor::count();
+
+        // Retornamos la vista 'count' pasando la variable
+        return view('actors.count', ['count' => $totalActors]);
+    }
 }

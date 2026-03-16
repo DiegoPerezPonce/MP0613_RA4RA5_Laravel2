@@ -60,13 +60,19 @@ Route::prefix('filmout')->group(function () {
 
 Route::prefix('actorout')->group(function () {
 
-    // FR1: List actors
+    // FR1 
+    // List actors
     Route::get('actors', [ActorController::class, 'listActors'])->name('actors');
 
+    //FR2
     // Esta ruta espera /actorout/listActorsByDecade/1980
     Route::get('/listActorsByDecade/{year}', [ActorController::class, 'listActorsByDecade'])
         ->name('listActorsByDecade')
-        ->middleware('decade'); // Tu middleware personalizado para décadas
+        ->middleware('decade'); // middleware personalizado para décadas
+
+    // FR3 
+    // Ruta para contar actores
+    Route::get('/countActors', [ActorController::class, 'countActors'])->name('countActors');
 });
 
 Route::group(['prefix' => 'filmin'], function () {
