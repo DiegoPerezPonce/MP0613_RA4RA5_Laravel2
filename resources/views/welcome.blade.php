@@ -422,6 +422,16 @@
                 }
             });
         </script>
+
+        <!-- FR3 Count actors -->
+         <a href="{{ route('countActors') }}" class="category-card">
+            <div class="category-icon">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+            <div class="category-title">Número de actores</div>
+            <div class="category-description">Actores registrados</div>
+        </a>
+
     </div>
 
     <!-- FORM SECTION -->

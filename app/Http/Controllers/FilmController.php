@@ -13,7 +13,7 @@ class FilmController extends Controller
      */
     public static function readFilms(): array
     {
-        //$films = Storage::json('/public/films.json');
+       // $films = Storage::json('/public/films.json');
         $films = Film::all();
          dd(vars:$films);
         return $films ?? [];
