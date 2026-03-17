@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ActorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+// FR4: Eliminar un actor por ID vía API
+Route::delete('/actors/{id}', [ActorController::class, 'destroy']);

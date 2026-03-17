@@ -41,4 +41,30 @@ class ActorController extends Controller
         // Retornamos la vista 'count' pasando la variable
         return view('actors.count', ['count' => $totalActors]);
     }
+
+    //FR4 Delete actor (API)
+    //URL: DELETE /api/actors/{id}
+    public function destroy($id)
+    {
+        // Buscamos el actor por su ID
+        $actor = \App\Models\Actor::find($id);
+
+        // Si no existe, devolvemos un error 404 en formato JSON
+        if (!$actor) {
+            return response()->json([
+                'action' => 'delete',
+                'status' => false,
+                'error' => 'Actor no encontrado'
+            ], 404);
+        }
+
+        // Si existe, lo eliminamos
+        $deleted = $actor->delete();
+
+        // Devolvemos la respuesta de éxito
+        return response()->json([
+            'action' => 'delete',
+            'status' => $deleted
+        ], 200);
+    }
 }
