@@ -13,11 +13,10 @@ class FilmController extends Controller
      */
     public static function readFilms(): array
     {
-       // $films = Storage::json('/public/films.json');
+        // $films = Storage::json('/public/films.json');
         $films = Film::all();
-         dd(vars:$films);
+        dd(vars: $films);
         return $films ?? [];
-       
     }
 
     /**
@@ -78,14 +77,14 @@ class FilmController extends Controller
             if ((!is_null($year) && is_null($genre)) && $film['year'] == $year) {
                 $title = "Listado de todas las pelis filtrado x año";
                 $films_filtered[] = $film;
-            } 
-            else if ((is_null($year) && !is_null($genre)) && strtolower($film['genre']) == strtolower($genre)) {
+            } else if ((is_null($year) && !is_null($genre)) && strtolower($film['genre']) == strtolower($genre)) {
                 $title = "Listado de todas las pelis filtrado x categoria";
                 $films_filtered[] = $film;
-            } 
-            else if (!is_null($year) && !is_null($genre) 
-                && strtolower($film['genre']) == strtolower($genre) 
-                && $film['year'] == $year) {
+            } else if (
+                !is_null($year) && !is_null($genre)
+                && strtolower($film['genre']) == strtolower($genre)
+                && $film['year'] == $year
+            ) {
                 $title = "Listado de todas las pelis filtrado x categoria y año";
                 $films_filtered[] = $film;
             }
@@ -200,5 +199,11 @@ class FilmController extends Controller
             'films' => $films,
             'title' => 'Listado de todas las películas'
         ]);
+    }
+
+    //FR5 
+    public function index()
+    {
+        return response()->json(Film::with('actors')->get());
     }
 }
