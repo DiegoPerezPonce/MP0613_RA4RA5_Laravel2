@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\FilmController;
 use App\Http\Controllers\ActorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 /*
@@ -23,3 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // FR4: Eliminar un actor por ID vía API
 Route::delete('/actors/{id}', [ActorController::class, 'destroy']);
+
+//FR5 
+// Laravel añade automáticamente el prefijo /api/ a lo que pongas aquí
+Route::get('/films', [FilmController::class, 'index']);

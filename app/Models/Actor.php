@@ -9,10 +9,12 @@ class Actor extends Model
 {
     use HasFactory;
 
-    public function listActors()
+    /**
+     * Relación N:M - Un actor participa en muchas películas.
+     */
+    public function films()
     {
-        $actors = Actor::all();
-
-        return view('actors.list', compact('actors'));
+        // Al no especificar parámetros, Laravel busca la tabla 'actor_film' automáticamente
+        return $this->belongsToMany(Film::class);
     }
 }
