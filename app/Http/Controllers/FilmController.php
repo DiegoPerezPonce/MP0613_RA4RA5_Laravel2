@@ -15,8 +15,8 @@ class FilmController extends Controller
     {
         // $films = Storage::json('/public/films.json');
         $films = Film::all();
-        dd(vars: $films);
-        return $films ?? [];
+        //dd(vars: $films);
+        return $films->toArray() ?? [];
     }
 
     /**
